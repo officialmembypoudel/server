@@ -3,12 +3,12 @@ import { WebSocket, WebSocketServer } from 'ws';
 import { v4 as uuidGenerator } from 'uuid';
 
 import { states } from './model/state.js';
-import { client } from './model/user.js';
 
 const PORT = 443;
 
 const server = http.createServer();
 
+// create websocket server
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws) => {
@@ -49,14 +49,18 @@ wss.on('connection', (ws) => {
             });
           } else if (gadget.name === 'potentiometer') {
             gadget.value = data.value;
-            ws.send(
-              JSON.stringify({
-                success: true,
-                message: 'update',
-                data: gadget,
-                source: 'server',
-              })
-            );
+            wss.clients.forEach((client) => {
+              if (client.readyState === WebSocket.OPEN) {
+                client.send(
+                  JSON.stringify({
+                    success: true,
+                    message: 'update',
+                    data: gadget,
+                    source: 'server',
+                  })
+                );
+              }
+            });
           } else {
             ws.send(
               JSON.stringify({
