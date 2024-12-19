@@ -3,10 +3,11 @@ import { WebSocket, WebSocketServer } from 'ws';
 import { v4 as uuidGenerator } from 'uuid';
 
 import { states } from './model/state.js';
+import { app } from './app.js';
 
 const PORT = 443;
 
-const server = http.createServer();
+const server = http.createServer(app);
 
 // create websocket server
 const wss = new WebSocketServer({ server });
