@@ -18,7 +18,7 @@ wss.on('connection', (ws) => {
     try {
       const data = JSON.parse(message);
 
-      if (data.messasge === 'fetch') {
+      if (data.message === 'fetch') {
         ws.send(
           JSON.stringify({
             success: true,
