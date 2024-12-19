@@ -5,7 +5,7 @@ import { v4 as uuidGenerator } from 'uuid';
 import { states } from './model/state.js';
 import { app } from './app.js';
 
-const PORT = 443;
+const PORT = 8080;
 
 const server = http.createServer(app);
 
